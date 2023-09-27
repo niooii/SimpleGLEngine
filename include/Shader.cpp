@@ -9,30 +9,37 @@ Shader::Shader(const char* geom, const char* vert, const char* frag)
     char infoLog[512];
 
     GLuint geometryShader = glCreateShader(GL_GEOMETRY_SHADER);
-    glShaderSource(geometryShader, 1, &geom, nullptr);
+    std::string geoStr = readFile(vert);
+    const char* geoSrc = geoStr.c_str();
+    glShaderSource(geometryShader, 1, &geoSrc, nullptr);
     glCompileShader(geometryShader);
     glGetShaderiv(geometryShader, GL_COMPILE_STATUS, &success);
     if(!success){
         glGetShaderInfoLog(geometryShader, 512, NULL, infoLog);
-        //
+        std::cerr << "geometry not compiled: " << infoLog << '\n';
     }
 
+
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vert, nullptr);
+    std::string vertStr = readFile(vert);
+    const char* vertSrc = vertStr.c_str();
+    glShaderSource(vertexShader, 1, &vertSrc, nullptr);
     glCompileShader(vertexShader);
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if(!success){
         glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        //
+        std::cerr << "vertex not compiled: " << infoLog << '\n';
     }
 
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &frag, nullptr);
+    std::string fragStr = readFile(frag);
+    const char* fragSrc = fragStr.c_str();
+    glShaderSource(fragmentShader, 1, &fragSrc, nullptr);
     glCompileShader(fragmentShader);
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if(!success){
         glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-        //
+        std::cerr << "fragment not compiled: " << infoLog << '\n';
     }
 
     shaderProgram = glCreateProgram();
@@ -45,7 +52,7 @@ Shader::Shader(const char* geom, const char* vert, const char* frag)
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
     if (!success) {
         glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+        std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
 
     glDeleteShader(geometryShader);
