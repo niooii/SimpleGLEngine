@@ -1,0 +1,3 @@
+/home/niooi/Projects/CLionProjects/GLGameEngine/cmake-build-debug/CMakeFiles/GLGameEngine.dir
+/home/niooi/Projects/CLionProjects/GLGameEngine/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/niooi/Projects/CLionProjects/GLGameEngine/cmake-build-debug/CMakeFiles/rebuild_cache.dir
